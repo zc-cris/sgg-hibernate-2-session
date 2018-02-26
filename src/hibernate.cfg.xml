@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+    
+    	<!-- 配置连接数据库的基本信息 -->
+    	<property name="connection.username">root</property>
+    	<property name="connection.password">123456</property>
+    	<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+    	<property name="connection.url">jdbc:mysql:///hibernate5</property>
+    
+    	<!-- 配置hibernat的基本信息 -->
+    	<!-- hibernate 所使用的数据库方言 -->
+    	<property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+    	<!-- 执行操作时，是否在控制台打印sql语句 -->
+    	<property name="show_sql">true</property>
+    	<!-- 是否对sql语句进行格式化显示 -->
+    	<property name="format_sql">true</property>
+    	<!-- 制定自动生成数据表的策略，即程序运行可以在数据库自动生成数据表 -->
+    	<property name="hbm2ddl.auto">update</property>
+    
+    	<mapping resource="com/zc/cris/pojo/News.hbm.xml"/>
+    
+    </session-factory>
+</hibernate-configuration>
