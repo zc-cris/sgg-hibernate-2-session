@@ -8,6 +8,8 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Date;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,10 +54,31 @@ class TestHibernate {
 //		System.out.println("destroy");
 	}
 	
+	/**
+	 * 测试 session 缓存
+	 */
+	@Test
+	public void testSessionCatch() {
+		//实际上由于 session 的缓存（一级缓存）作用，这里只查询了一次数据库，第二次查询的数据(如果和第一次相同)，那么是从 session 缓存中获取的
+		News news = this.session.get(News.class, 1);
+		System.out.println(news);
+		News news2 = this.session.get(News.class, 1);
+		System.out.println(news2);
+	}
+	
+	/**
+	 * flush：使数据表中的数据和 session 缓存中的对象的状态保持一致，为了保持一致，可能会发送对应的 sql 语句（在不一致的情况下）
+	 * 1. 
+	 */
+	@Test
+	public void testSessionFlush() {
+		News news = this.session.get(News.class, 1);
+		news.setAuthor("Oracle");
+	}
+	
 	@Test
 	public void test() {
-		
-		
+//		this.session.save(new News("java", "james", new Date()));
 		
 	}
 
