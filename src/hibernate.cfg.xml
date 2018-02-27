@@ -20,7 +20,31 @@
     	<property name="format_sql">true</property>
     	<!-- 制定自动生成数据表的策略，即程序运行可以在数据库自动生成数据表 -->
     	<property name="hbm2ddl.auto">update</property>
-    
+    	<!-- 删除对象对应的数据后，使这个对象的OID为null -->
+    	<property name="use_identifier_rollback">true</property>
+    	
+    	<!-- 配置c3p0数据库连接池 -->
+    	<property name="c3p0.max_size">10</property>
+    	<property name="c3p0.min_size">5</property>
+    	<property name="c3p0.acquire_increment">2</property>
+    	
+    	<property name="c3p0.idle_test_period">2000</property>
+    	<property name="c3p0.timeout">2000</property>
+    	<property name="c3p0.max_statements">10</property>
+    	
+    	<!-- hibernate.jdbc.fetch_size：实质是调用 Statement.setFetchSize() 方法设定 JDBC 的 Statement 读取数据的时候每次从数据库中取出的记录条数
+    		对Oracle有效，mysql无效
+    	 -->
+    	<property name="hibernate.jdbc.fetch_size">100</property>
+    	<!-- hibernate.jdbc.batch_size：设定对数据库进行批量删除，批量更新和批量插入的时候的批次大小 
+    		对Oracle有效，mysql无效
+    	-->
+    	<property name="hibernate.jdbc.batch_size">30</property>
+    	
+    	<!-- 设置hibernate的事务隔离级别
+    	<property name="connection.isolation">2</property>
+    	 -->
+    	 
     	<mapping resource="com/zc/cris/pojo/News.hbm.xml"/>
     
     </session-factory>
