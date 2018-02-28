@@ -20,11 +20,49 @@ import org.junit.jupiter.api.Test;
 
 class TestHibernate2 {
 	
-	
 	private SessionFactory sessionFactory = null;
 	private Session session = null;
 	private Transaction transaction = null;
 
+	/*
+	 * 测试News对象的派生属性
+	 */
+	@Test
+	void testFormulaProperty() {
+		News news = this.session.get(News.class, 4);
+		System.out.println(news.getDesc());
+	}
+	
+	/*
+	 * 对象映射文件中的字段的update属性设置为false，对应的属性无法修改到数据库中
+	 */
+	@Test
+	void testPropertyUpdate() {
+		News news = this.session.get(News.class, 4);
+		news.setAuthor("保罗");
+	}
+	
+	/*
+	 * 测试通过hibernate的配置文件来修改主键生成策略
+	 */
+	@Test
+	void testIdGenerator() throws InterruptedException {
+		News news = new News("bb", "cirs", new Date());
+		this.session.save(news);
+		
+		Thread.sleep(5000);
+	}
+	
+	/*
+	 * 动态更新当前session缓存对象已经改变了的属性对应的记录
+	 * (假如缓存对象只有name属性发生了改变，那么更新语句只会更新name属性对应的那个记录）
+	 */
+	@Test
+	void testDynamicUpdate() {
+		News news = this.session.get(News.class, 3);
+		news.setAuthor("cris");
+	}
+	
 	/**
 	 * 
 	 * @MethodName: init

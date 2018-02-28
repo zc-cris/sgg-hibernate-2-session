@@ -8,6 +8,15 @@ public class News {
 	private String title;
 	private String author;
 	private Date date;
+	
+	//派生属性
+	private String desc;
+	public String getDesc() {
+		return desc;
+	}
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
 	public Integer getId() {
 		return id;
 	}

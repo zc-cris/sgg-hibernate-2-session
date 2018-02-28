@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<hibernate-mapping>
-    <class name="com.zc.cris.pojo.News" table="NEWS">
+<hibernate-mapping package="com.zc.cris.pojo">
+    <class name="News" table="NEWS" dynamic-update="true">
         <id name="id" type="java.lang.Integer">
             <column name="ID" />
             <generator class="native" />
@@ -10,11 +10,16 @@
         <property name="title" type="java.lang.String">
             <column name="TITLE" />
         </property>
-        <property name="author" type="java.lang.String">
+        <property name="author" type="java.lang.String" update="false" unique="true" index="news_index" length="20">
             <column name="AUTHOR" />
         </property>
-        <property name="date" type="java.util.Date">
+        <property name="date" type="java.util.Date" index="news_index">
             <column name="DATE" />
         </property>
+        
+        <!-- 映射派生属性desc -->
+        <property name="desc" formula="(select concat(author,' : ',title) from NEWS n where n.id = id)"></property>
+        
+        
     </class>
 </hibernate-mapping>
