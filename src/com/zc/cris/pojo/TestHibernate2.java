@@ -18,12 +18,32 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.zc.cris.pojo.component.Emp;
+import com.zc.cris.pojo.component.Salary;
+
 class TestHibernate2 {
 	
 	private SessionFactory sessionFactory = null;
 	private Session session = null;
 	private Transaction transaction = null;
 
+	/*
+	 * 测试hibernate中的组件关系映射
+	 */
+	@Test
+	void testComponent() {
+		Emp emp = new Emp("james", new Salary(100, 10000));
+		this.session.save(emp);
+		Emp emp2 = this.session.get(Emp.class, 1);
+		
+		//注意：如果想要获取Emp类组件Salary的属性，需要通过下面的方式来获取
+		System.out.println(emp2);
+		
+		//需要格外注意的是：如果调用组件Salary的toString方法，是不能打印出Emp类属性的，否则会抛出overStackFlow异常
+		System.out.println(emp2.getSalary());
+		System.out.println(emp2.getSalary().getMonthSalary());
+	}
+	
 	/*
 	 * 测试News对象的派生属性
 	 */
@@ -40,6 +60,7 @@ class TestHibernate2 {
 	void testPropertyUpdate() {
 		News news = this.session.get(News.class, 4);
 		news.setAuthor("保罗");
+		System.out.println(news.getDate());
 	}
 	
 	/*
@@ -238,7 +259,7 @@ class TestHibernate2 {
 	 */
 	@Test
 	void testPersist() {
-		News news = new News("cc", "张三", new Date());
+		News news = new News("aa", "2323", new Date());
 		System.out.println(news);
 //		news.setId(1001);
 		this.session.persist(news);;

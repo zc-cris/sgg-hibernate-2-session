@@ -54,7 +54,9 @@
     	<property name="connection.isolation">2</property>
     	 -->
     	 
+    	<!-- 引入对象关系映射文件 -->
     	<mapping resource="com/zc/cris/pojo/News.hbm.xml"/>
+    	<mapping resource="com/zc/cris/pojo/component/Emp.hbm.xml"/>
     
     </session-factory>
 </hibernate-configuration>
